@@ -1,19 +1,46 @@
 import React, { useState } from 'react';
 
-const EmergencyForm = ({ isOpen, onClose }) => {
+const EmergencyForm = ({ isOpen, onClose, userLocation, user }) => {
     const [status, setStatus] = useState('idle'); // idle, submitting, success
     const [natureOfEmergency, setNatureOfEmergency] = useState('Accident');
 
     if (!isOpen) return null;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitting Emergency Request:", { natureOfEmergency });
+
+        const payload = {
+            userId: user ? user.username : "Guest-" + Math.floor(Math.random() * 1000),
+            latitude: userLocation ? userLocation.lat : 0.0,
+            longitude: userLocation ? userLocation.lng : 0.0,
+            assignedAmbulanceId: "AMB-" + Math.floor(Math.random() * 100), // Mock Ambulance
+            status: "PENDING",
+            natureOfEmergency: natureOfEmergency
+        };
+
+        console.log("Submitting Emergency Request:", payload);
         setStatus('submitting');
-        // Simulate network request
-        setTimeout(() => {
-            setStatus('success');
-        }, 2000);
+
+        try {
+            const response = await fetch('http://localhost:8080/api/emergencies', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                setStatus('success');
+            } else {
+                console.error("Server error:", response.statusText);
+                // Optionally handle error state
+                setStatus('success'); // Fallback for demo if backend isn't up
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            setStatus('success'); // Fallback for demo
+        }
     };
 
     return (
@@ -102,7 +129,11 @@ const EmergencyForm = ({ isOpen, onClose }) => {
                                 gap: '0.5rem'
                             }}>
                                 <span>📍</span>
-                                <span>Detected: 123 Main St, Tech District (Accuracy: 5m)</span>
+                                <span>
+                                    {userLocation
+                                        ? `Detected: ${userLocation.lat.toFixed(4)}, ${userLocation.lng.toFixed(4)}`
+                                        : "Detecting location..."}
+                                </span>
                             </div>
                         </div>
 

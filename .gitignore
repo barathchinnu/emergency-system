@@ -1,0 +1,20 @@
+# Backups and zips
+*.zip
+*.7z
+*.rar
+
+# Logs
+*.log
+build_log.txt
+error.log
+
+# IDEs
+.idea/
+*.swp
+*.swo
+
+# Subproject artifacts (usually handled by their own .gitignore, but safe to include)
+node_modules/
+dist/
+target/
+.DS_Store

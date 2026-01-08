@@ -24,9 +24,39 @@ const StatusCard = ({ title, value, unit, color, icon }) => (
     </div>
 );
 
-const Dashboard = () => {
+const Dashboard = ({ user, activeRequest }) => {
+    // Internal fetching removed, receiving activeRequest from App.jsx
+
     return (
         <div id="dashboard" style={{ padding: '4rem 0' }}>
+            {activeRequest && (
+                <div className="glass-panel" style={{
+                    padding: '1.5rem', marginBottom: '2rem',
+                    border: activeRequest.status === 'ACCEPTED' ? '1px solid var(--positive-green)' : '1px solid var(--primary-red)',
+                    background: activeRequest.status === 'ACCEPTED' ? 'rgba(46, 196, 182, 0.1)' : 'rgba(230, 57, 70, 0.1)'
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div>
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem' }}>
+                                {activeRequest.status === 'ACCEPTED' ? '🚑 HELP IS ON THE WAY' : '⚠️ SEARCHING FOR AMBULANCE'}
+                            </h3>
+                            <p style={{ color: 'var(--text-secondary)' }}>
+                                {activeRequest.status === 'ACCEPTED'
+                                    ? `Ambulance ${activeRequest.assignedAmbulanceId} has accepted your request.`
+                                    : "Your request has been broadcasted to nearby units."}
+                            </p>
+                        </div>
+                        <div style={{
+                            fontSize: '2rem',
+                            background: 'rgba(255,255,255,0.1)', width: '60px', height: '60px',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%'
+                        }}>
+                            {activeRequest.status === 'ACCEPTED' ? '👨‍⚕️' : '📡'}
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginBottom: '2rem' }}>
                 <div>
                     <h2 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>Live Situation Overview</h2>
