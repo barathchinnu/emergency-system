@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL from '../apiConfig';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -98,7 +99,7 @@ const AmbulanceDashboard = ({ user }) => {
         if (selectedRequest && selectedRequest.hospitalId) {
             const fetchHospital = async () => {
                 try {
-                    const response = await fetch('http://localhost:8080/api/hospitals');
+                    const response = await fetch(`${API_BASE_URL}/api/hospitals`);
                     if (response.ok) {
                         const data = await response.json();
                         const hospital = data.find(h => h.id === selectedRequest.hospitalId);
@@ -118,7 +119,7 @@ const AmbulanceDashboard = ({ user }) => {
     useEffect(() => {
         const fetchRequests = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/emergencies');
+                const response = await fetch(`${API_BASE_URL}/api/emergencies`);
                 if (response.ok) {
                     const data = await response.json();
                     setRequests(data);
@@ -159,7 +160,7 @@ const AmbulanceDashboard = ({ user }) => {
                 assignedAmbulanceId: user.username // Use username as ID for now
             };
 
-            const response = await fetch(`http://localhost:8080/api/emergencies/${selectedRequest.id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/emergencies/${selectedRequest.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

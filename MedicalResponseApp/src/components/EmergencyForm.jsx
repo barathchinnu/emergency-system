@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import API_BASE_URL from '../apiConfig';
 
 const EmergencyForm = ({ isOpen, onClose, userLocation, user }) => {
     const [status, setStatus] = useState('idle'); // idle, submitting, success
@@ -22,7 +23,7 @@ const EmergencyForm = ({ isOpen, onClose, userLocation, user }) => {
         setStatus('submitting');
 
         try {
-            const response = await fetch('http://localhost:8080/api/emergencies', {
+            const response = await fetch(`${API_BASE_URL}/api/emergencies`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

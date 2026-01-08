@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE_URL from '../apiConfig';
 
 const HospitalDashboard = ({ user }) => {
     const [requests, setRequests] = useState([]);
@@ -7,7 +8,7 @@ const HospitalDashboard = ({ user }) => {
     useEffect(() => {
         const fetchHospitals = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/hospitals');
+                const response = await fetch(`${API_BASE_URL}/api/hospitals`);
                 if (response.ok) {
                     const data = await response.json();
                     // Assuming for demo the first hospital matches the logged in user or we just pick one
@@ -23,7 +24,7 @@ const HospitalDashboard = ({ user }) => {
 
     const fetchRequests = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/emergencies');
+            const response = await fetch(`${API_BASE_URL}/api/emergencies`);
             if (response.ok) {
                 const data = await response.json();
                 // Filter requests that are for this hospital or unassigned
@@ -45,7 +46,7 @@ const HospitalDashboard = ({ user }) => {
 
         const doctorName = user.username;
         try {
-            const response = await fetch(`http://localhost:8080/api/hospitals/accept/${requestId}?hospitalId=${hospitalInfo.id}&doctorName=${doctorName}`, {
+            const response = await fetch(`${API_BASE_URL}/api/hospitals/accept/${requestId}?hospitalId=${hospitalInfo.id}&doctorName=${doctorName}`, {
                 method: 'PUT'
             });
 

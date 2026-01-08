@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import API_BASE_URL from '../apiConfig';
 import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents, Polyline } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import 'leaflet/dist/leaflet.css';
@@ -156,7 +157,7 @@ const MapOverlay = ({ onLocationFound, activeRequest }) => {
         const fetchHospitals = async () => {
             setFetchingHospitals(true);
             try {
-                const response = await fetch('http://localhost:8080/api/hospitals');
+                const response = await fetch(`${API_BASE_URL}/api/hospitals`);
                 if (response.ok) {
                     const data = await response.json();
                     setHospitals(data);

@@ -10,6 +10,7 @@ import Signup from './components/Signup';
 import RoleSelection from './components/RoleSelection';
 import AmbulanceDashboard from './components/AmbulanceDashboard';
 import HospitalDashboard from './components/HospitalDashboard';
+import API_BASE_URL from './apiConfig';
 
 function App() {
   const [isEmergencyModalOpen, setEmergencyModalOpen] = useState(false);
@@ -25,7 +26,7 @@ function App() {
 
     const fetchStatus = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/emergencies');
+        const response = await fetch(`${API_BASE_URL}/api/emergencies`);
         if (response.ok) {
           const data = await response.json();
           const myRequests = data.filter(req => req.userId === user.username);
