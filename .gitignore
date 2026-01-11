@@ -13,8 +13,13 @@ error.log
 *.swp
 *.swo
 
-# Subproject artifacts (usually handled by their own .gitignore, but safe to include)
+# Subproject artifacts
 node_modules/
 dist/
 target/
 .DS_Store
+
+# Exclude copies and gaming folder
+gaming/
+MedicalResponseApp - Copy*/
+MedicalResponseApp (2).zip

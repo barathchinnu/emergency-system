@@ -5,27 +5,17 @@
 - Java 17+ & Maven (for backend)
 - MySQL Database
 
-## How to Run
-
-### 1. Database
-Ensure your MySQL server is running. The backend will automatically create the database `medical_response_db` if it doesn't exist.
-*Note: Default credentials are `root` with no password. Update `src/main/resources/application.properties` if yours differ.*
-
-### 2. Backend (Spring Boot)
-Open a new terminal:
+### 1. Run using Docker (Recommended for another laptop)
+If you have Docker installed, simply run this from the project root:
 ```bash
-cd medical-response-backend
-mvn spring-boot:run
+docker-compose up --build
 ```
-The server will start on `http://localhost:8080`.
+This will automatically set up the Database, Backend, and Frontend.
 
-### 3. Frontend (React)
-Open a terminal (or usage exiting one):
-```bash
-cd MedicalResponseApp
-npm run dev
-```
-Open the provided URL (usually `http://localhost:5173`).
+### 2. Manual Run
+Open two terminals:
+- **Backend**: `cd medical-response-backend && mvn spring-boot:run`
+- **Frontend**: `cd MedicalResponseApp && npm run dev`
 
 ## Usage
 1. Open the frontend in your browser.
